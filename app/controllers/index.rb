@@ -3,6 +3,11 @@ get '/' do
   erb :index
 end
 
+post '/' do
+  # Look in app/views/index.erb
+  erb :index
+end
+
 get '/new_user' do
 
   erb :new_user
