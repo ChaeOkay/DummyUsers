@@ -18,11 +18,15 @@ get '/new_user' do
 end
 
 post '/new_user' do
-
-  erb :index
+  if params[:password] == params[:confirm_password]
+    User.create(username: params[:username], password: params[:password]) 
+    redirect '/'
+  else
+    redirect '/new_user'
+  end
 end
 
 get '/secret' do
-  
+  "I can't believe you're seeing this right now..."
   # erb :secret
 end
