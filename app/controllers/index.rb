@@ -1,10 +1,11 @@
 get '/' do
   # Look in app/views/index.erb
+  #if seesion[:username] view -> load message
   erb :index
 end
 
 post '/' do
-  # Look in app/views/index.erb
+  self.authenticate(params[:username], params[:password])
   erb :index
 end
 
