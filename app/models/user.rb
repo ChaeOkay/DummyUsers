@@ -1,3 +1,6 @@
 class User < ActiveRecord::Base
-  # Remember to create a migration!
+  
+  def self.authenticate(username, password)
+      self.where(username: username, password: password).empty?
+  end
 end
