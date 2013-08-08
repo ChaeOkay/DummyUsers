@@ -1,14 +1,18 @@
 get '/' do
-  # Look in app/views/index.erb
-  #if seesion[:username] view -> load message
-  erb :index
+  redirect '/login'
 end
 
-post '/' do
+get '/login' do
+  # Look in app/views/index.erb
+  #if seesion[:username] view -> load message
+  erb :login
+end
+
+post '/login' do
   unless User.authenticate(params[:username], params[:password])
     redirect '/secret'
   else
-    redirect '/'
+    redirect '/login'
   end
 end
 
@@ -18,15 +22,15 @@ get '/new_user' do
 end
 
 post '/new_user' do
-  if params[:password] == params[:confirm_password]
+  if params[:password] == params[:confirm_password] && User.where(username: params[:username]).empty?
     User.create(username: params[:username], password: params[:password]) 
-    redirect '/'
+    redirect '/login'
   else
     redirect '/new_user'
   end
 end
 
 get '/secret' do
-  "I can't believe you're seeing this right now..."
-  # erb :secret
+
+  erb :secret
 end
