@@ -5,8 +5,11 @@ get '/' do
 end
 
 post '/' do
-  self.authenticate(params[:username], params[:password])
-  erb :index
+  unless User.authenticate(params[:username], params[:password])
+    redirect '/secret'
+  else
+    redirect '/'
+  end
 end
 
 get '/new_user' do
@@ -21,5 +24,5 @@ end
 
 get '/secret' do
   
-  erb :secret
+  # erb :secret
 end
