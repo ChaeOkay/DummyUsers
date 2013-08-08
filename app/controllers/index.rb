@@ -3,13 +3,13 @@ get '/' do
 end
 
 get '/login' do
-  # Look in app/views/index.erb
-  #if seesion[:username] view -> load message
   erb :login
 end
 
 post '/login' do
   unless User.authenticate(params[:username], params[:password])
+    session[:username] = params[:username]
+    session[:logged_in?] = true
     redirect '/secret'
   else
     redirect '/login'
@@ -33,4 +33,8 @@ end
 get '/secret' do
 
   erb :secret
+end
+
+get '/logout' do
+  redirect '/'
 end
